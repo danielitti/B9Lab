@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Splitter</title>
+  <script src="./app.js"></script>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+ <h1>Splitter</h1>
+ <table>
+  <tr>
+    <th>Account</th>
+    <th>Address</th>    
+    <th>Balance (ETH)</th>
+    <th>Amount to send (ETH)</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td>Contract</td>
+    <td><span id="ContractAddress"></span></td>
+    <td><span id="ContractBalance"></span></td>    
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Owner</td>
+    <td><span id="OwnerAddress"></span></td>
+    <td><span id="OwnerBalance"></span></td>    
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Alice</td>
+    <td><span id="AliceAddress"></span></td>
+    <td><span id="AliceBalance"></span></td>    
+    <td><label for="AliceAmount"></label><input type="text" id="AliceAmount" placeholder="e.g., 95"></input></td>
+    <td><button id="send" onclick="Split('Alice')">Send</button></td>
+  </tr>
+  <tr>
+    <td>Bob</td>
+    <td><span id="BobAddress"></span></td>
+    <td><span id="BobBalance"></span></td>    
+    <td><label for="BobAmount"></label><input type="text" id="BobAmount" placeholder="e.g., 95"></input></td>
+    <td><button id="send" onclick="Split('Bob')">Send</button></td>
+  </tr>
+  <tr>
+    <td>Carol</td>
+    <td><span id="CarolAddress"></span></td>
+    <td><span id="CarolBalance"></span></td>    
+    <td><label for="CarolAmount"></label><input type="text" id="CarolAmount" placeholder="e.g., 95"></input></td>
+    <td><button id="send" onclick="Split('Carol')">Send</button></td>
+  </tr>
+    <tr>
+    <td>Anyone</td>
+    <td><label for="AnyoneAddress"></label><input type="text" width="600" id="AnyoneAddress" placeholder=""></input></td>
+    <td></td>
+    <td><label for="AnyoneAmount"></label><input type="text" id="AnyoneAmount" placeholder="e.g., 95"></input></td>
+    <td><button id="send" onclick="Split('Anyone')">Send</button></td>
+  </tr>
+ </table>
+ <button id="send" onclick="refreshBalances()">Refresh balance</button> 
+</body>
+</html>
