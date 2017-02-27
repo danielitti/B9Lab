@@ -70,10 +70,6 @@ window.onload = function() {
     displayAddress('Bob');
     displayAddress('Carol');
     displayAddress('Contract');
-    refreshBalance('Owner');
-    refreshBalance('Alice');
-    refreshBalance('Bob');
-    refreshBalance('Carol');
-    refreshBalance('Contract');
+    refreshBalances();
   });
 }
