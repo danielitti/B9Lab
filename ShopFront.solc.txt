@@ -64,6 +64,8 @@ contract ShopFront {
                 price: parPrice,
                 stock: parStock
             }));
+            
+            inventory[parId] = Product(parId, parIsAvailable, parName, parPrice, parStock);
     }
     
     function updateAvailability(uint parId, bool parIsAvailable) 
