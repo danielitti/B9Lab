@@ -26,6 +26,13 @@ contract ShopFront {
             }
             _;
         }
+
+    modifier isOwner() {
+            if (msg.sender != pOwner) {
+                throw;
+            }
+            _;
+        }
         
     modifier isAvailable(uint parId) {
             if (!inventory[parId].isAvailable) {
@@ -78,9 +85,16 @@ contract ShopFront {
             inventory[parId].price = parPrice;
     }
     
+    function withdrawn(uint parAmount) 
+        isOwner() {
+            if (this.balance >= parAmount || parAmount > 0) {
+                if (!pOwner.send(parAmount)) throw;
+            }
+        }
+        
     function getProduct(uint parId) constant returns (uint id, bool isAvailable, uint name, uint price, uint stock) {
         Product p = inventory[parId];
-        return (p.productId, p.isAvailable, p.name, p.price, p.stock);
+        return (parId, p.isAvailable, p.name, p.price, p.stock);
     }   
 
     function getN() constant returns (uint) {
