@@ -78,6 +78,13 @@ contract ShopFront {
             inventory[parId].price = parPrice;
     }
     
+    function getProduct(uint parId) constant returns (uint id, bool isAvailable, uint name, uint price, uint stock) {
+        Product p = inventory[parId];
+        return (parId, p.isAvailable, p.name, p.price, p.stock);
+    }   
 
+    function getN() constant returns (uint) {
+         return 33;
+    }
 }
 
