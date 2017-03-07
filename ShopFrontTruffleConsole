@@ -1,0 +1,78 @@
+// unlock the accounts
+// eth.accounts[0] is owner
+// eth.accounts[1] is merchant
+// eth.accounts[2] is not used
+// eth.accounts[3] is customer
+// eth.accounts[4] is not used
+
+
+//add a merchant
+ShopFront.deployed().addMerchant(web3.eth.accounts[1], "SellerOne", {from: web3.eth.accounts[0]})
+
+//check merchant
+ShopFront.deployed().isMerchantActive.call(web3.eth.accounts[1])
+// this is not a merchant
+ShopFront.deployed().isMerchantActive.call(web3.eth.accounts[2])
+
+//this will be succesful
+ShopFront.deployed().addProduct(0, true, "ProdOne", 10, 100, {from: web3.eth.accounts[1]})
+
+//this will throw
+ShopFront.deployed().addProduct(0, true, "ProdTwo", 20, 200, {from: web3.eth.accounts[2]})
+//web3.eth.getTransactionReceipt('0x021d7a905e93615e0b1cbf1ad5a295142c7e769cce21febbfeda062495577ed8')
+
+//this will be succesful
+ShopFront.deployed().addProduct(1, true, "ProdThree", 50, 1, {from: web3.eth.accounts[1]})
+
+
+//will give me the product details
+ShopFront.deployed().getProduct.call(0, {from: web3.eth.accounts[1]})
+// will not give me the product
+ShopFront.deployed().getProduct.call(0, {from: web3.eth.accounts[2]})
+//will give me the product details
+ShopFront.deployed().getProduct.call(1, {from: web3.eth.accounts[1]})
+
+//add a customer
+ShopFront.deployed().addCustomer(web3.eth.accounts[3], "CustomerOne", {from: web3.eth.accounts[0]})
+
+//check customer
+ShopFront.deployed().isCustomerActive.call(web3.eth.accounts[3])
+// this is not a customer
+ShopFront.deployed().isCustomerActive.call(web3.eth.accounts[4])
+
+
+//check the contract balance is zero
+web3.eth.getBalance(ShopFront.deployed().address)
+
+//buy a product, quantity = 2, price = 100
+ShopFront.deployed().buyProduct(web3.eth.accounts[1], 0, 2, {from: web3.eth.accounts[3], value: 200})
+
+//check the contract balance is 200
+web3.eth.getBalance(ShopFront.deployed().address)
+
+//check the product purchased and check the merchant address is eth.accounts[1]
+ShopFront.deployed().getProductPurchased.call(0, {from: web3.eth.accounts[3]})
+
+//buy a product, quantity = 10, price = 1, this will not work due to wrong value sent
+ShopFront.deployed().buyProduct(web3.eth.accounts[1], 1, 10, {from: web3.eth.accounts[3], value: 11})
+
+//check the contract balance is 200
+web3.eth.getBalance(ShopFront.deployed().address)
+
+//check the product ha not been purchased 
+ShopFront.deployed().getProductPurchased.call(1, {from: web3.eth.accounts[3]})
+
+//buy a product, quantity = 10, price = 1, this will work
+ShopFront.deployed().buyProduct(web3.eth.accounts[1], 1, 10, {from: web3.eth.accounts[3], value: 10})
+
+//check the contract balance is 210
+web3.eth.getBalance(ShopFront.deployed().address)
+
+//check the product purchased and check the merchant address is eth.accounts[1]
+ShopFront.deployed().getProductPurchased.call(1, {from: web3.eth.accounts[3]})
+
+//withdrawn 160
+ShopFront.deployed().withdrawn(160, {from: web3.eth.accounts[0]})
+
+//check the contract balance is 50
+web3.eth.getBalance(ShopFront.deployed().address)
